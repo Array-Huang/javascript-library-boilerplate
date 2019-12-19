@@ -3,10 +3,10 @@ const mode = require('yargs').argv.mode;
 const libraryTarget = require('yargs').argv['output-library-target'];
 const pkg = require('./package.json');
 
-const libraryName = 'micro-schema-validator';
+const libraryName = pkg.name;
 
 const banner = `
-${pkg.name}
+${libraryName}
 ${pkg.description}\n
 @version v${pkg.version}
 @homepage ${pkg.homepage}
@@ -26,7 +26,7 @@ module.exports = {
     filename: mode === 'development' ? `${libraryName}.js` : `${libraryName}.min.js`,
     library: 'MicroSchemaValidator',
     libraryTarget: libraryTarget || 'umd',
-    globalObject: "(typeof self !== 'undefined' ? self : this)", // TODO Hack (for Webpack 4+) to enable create UMD build which can be required by Node without throwing error for window being undefined (https://github.com/webpack/webpack/issues/6522)
+    globalObject: "(typeof self !== 'undefined' ? self : this)", // https://github.com/webpack/webpack/issues/6522
     umdNamedDefine: true
   },
   module: {
